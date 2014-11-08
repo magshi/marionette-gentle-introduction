@@ -21,8 +21,8 @@
       <p>Here is static content in the web page. You'll notice that it gets replaced by our app as soon as we start it.</p>
     </div>
 
-    <script type="text/template" id="static-template">
-      <p>This is text that appears because of our magic Marionette app! Hurray!</p>
+    <script type="text/template" id="contact-template">
+      <p><%- firstName %> <%- lastName %></p>
     </script>
 
     <script src="./assets/js/vendor/jquery.js"></script>
@@ -38,14 +38,60 @@
         mainRegion: '#main-region'
       });
 
+      ContactManager.Contact = Backbone.Model.extend({
+        defaults: {
+          firstName: '',
+          lastName: '',
+          phoneNumber: 'No phone number!'
+        }
+      });
+
+      ContactManager.ContactView = Marionette.ItemView.extend({
+        template: '#contact-template',
+
+        events: {
+          'click p': 'alertPhoneNumber'
+        },
+
+        alertPhoneNumber: function(){
+          alert(this.model.escape('phoneNumber'));
+        }
+      });
+
       ContactManager.StaticView = Marionette.ItemView.extend({
         template: '#static-template'
       });
 
+      ContactManager.StaticView = Marionette.ItemView.extend({
+        template: '#list-item-template'
+      });
+
       ContactManager.on('start', function(){
-        var staticView = new ContactManager.StaticView();
-        ContactManager.mainRegion.show(staticView);
-        console.log("Hey there");
+        var maizy = new ContactManager.Contact({
+          firstName: 'Maizy',
+          lastName: 'Cat',
+          phoneNumber: '524-MEOW'
+        });
+
+        var morris = new ContactManager.Contact({
+          firstName: 'Morris',
+          phoneNumber: '524-MEOW'
+        });
+
+        var maizyView = new ContactManager.ContactView({
+          model: maizy
+        });
+
+        var staticView = new ContactManager.StaticView({
+          template: '#another-static-template'
+        });
+
+        var listView = new ContactManager.StaticView({
+          tagName: 'ul',
+          template: '#list-item-template'
+        });
+
+      ContactManager.mainRegion.show(maizyView);
       });
 
       ContactManager.start();
