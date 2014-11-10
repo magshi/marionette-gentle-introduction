@@ -1,7 +1,12 @@
 ContactManager.module("Entities", function(Entities, ContactManager,
 Backbone, Marionette, $, _){
 
-    // model and collection definitions are here
+    Entities.Contact = Backbone.Model.extend({});
+
+    Entities.ContactCollection = Backbone.Collection.extend({
+        model: Entities.Contact,
+        comparator: "firstName"
+    });
 
     var contacts;
 
@@ -34,10 +39,7 @@ Backbone, Marionette, $, _){
         }
     };
 
-    Entities.Contact = Backbone.Model.extend({});
-
-    Entities.ContactCollection = Backbone.Collection.extend({
-        model: Entities.Contact,
-        comparator: "firstName"
+    ContactManager.reqres.setHandler('contact:entities', function(){
+        return API.getContactEntities();
     });
 });

@@ -60,9 +60,11 @@
       });
 
       ContactManager.on('start', function(){
+        var contacts = ContactManager.request('contact:entities');
+
         var contactsListView = new ContactManager.ContactsView({
           collection: contacts
-        });
+      });
 
       ContactManager.mainRegion.show(contactsListView);
       });
