@@ -32,43 +32,10 @@
     <script src="./assets/js/vendor/backbone.marionette.js"></script>
     <script src="./assets/js/app.js"></script>
     <script src="./assets/js/entities/contact.js"></script>
+    <script src="./assets/js/apps/contacts/list/list_view.js"></script>
+    <script src="./assets/js/apps/contacts/list/list_controller.js"></s
 
     <script type="text/javascript">
-      ContactManager.Contact = Backbone.Model.extend({
-        defaults: {
-          firstName: '',
-          lastName: '',
-          phoneNumber: 'No phone number!'
-        }
-      });
-
-      ContactManager.Contact = Backbone.Model.extend({});
-
-      ContactManager.ContactCollection = Backbone.Collection.extend({
-        model: ContactManager.Contact,
-        comparator: 'firstName'
-      });
-
-      ContactManager.ContactItemView = Marionette.ItemView.extend({
-        tagName: 'li',
-        template: '#contact-list-item'
-      });
-
-      ContactManager.ContactsView = Marionette.CollectionView.extend({
-        tagName: 'ul',
-        childView: ContactManager.ContactItemView
-      });
-
-      ContactManager.on('start', function(){
-        var contacts = ContactManager.request('contact:entities');
-
-        var contactsListView = new ContactManager.ContactsView({
-          collection: contacts
-      });
-
-      ContactManager.mainRegion.show(contactsListView);
-      });
-
       ContactManager.start();
     </script>
   </body>
